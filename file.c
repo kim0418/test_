@@ -3,7 +3,7 @@
 
 int main(void){
 
-	FILE *fp=fopen("smaple.txt","a");
+	FILE *fp=fopen("smaple.txt","w");
 
 	if(fp==NULL){
 		fprintf(stderr, "file open fail\n");
@@ -11,7 +11,8 @@ int main(void){
 	}
 	
 	char c;
-	for(c='A';c<='Z';c++){
+	fprintf(fp,"/");
+	for(c='A';c<='k';c++){
 		fprintf(fp,"%c",c);
 	}
 
