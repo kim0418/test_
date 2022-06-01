@@ -48,11 +48,17 @@ void insert_before(node**head,int num, int input){
 	for(curr=*head;curr!=NULL;curr=curr->next){
 		if(curr->data==num){
 			node*newnode=addnode(input);
-			newnode->next=curr->prev->next;
-			newnode->prev=curr->prev;
-			curr->prev->next=newnode;
-			newnode->next->prev=newnode;
-			break;
+			if(curr->prev==NULL){
+				add_front(head,input);
+				break;
+			}
+			else{
+				newnode->next=curr->prev->next;
+				newnode->prev=curr->prev;
+				curr->prev->next=newnode;
+				newnode->next->prev=newnode;
+				break;
+			}
 		}
 	}
 }
