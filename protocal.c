@@ -3,124 +3,57 @@
 #include<stdlib.h>
 
 void decoding(char*argv0, char*argv1){
-	char *cur=malloc(sizeof(char));
-	FILE*fp1=fopen(argv0,"rb");
-	FILE*fp2=fopen(argv1,"a");
-	char*str=malloc(sizeof(char));
-	fread(str,sizeof(str),1,fp1);
-	int a=str[0]-'0';
-	for(int i=1;i<a+1;i++){
-		fprintf(fp2,"FRIEND%d ID: %s\n",i,str);
-		fprintf(fp2,"FRIEND%d NAME: %s\n",i,str);
-		fprintf(fp2,"FRIEND%d GENDER: %s\n",i,str);
-		fprintf(fp2,"FRIEND%d AGE: %s\n",i,str);
+	int count=0;
+	FILE* fp1 = fopen(argv0, "rb");
+	FILE* fp2 = fopen(argv1, "a");
+	FILE* fp3 = fopen("copy.txt","w");
+	char *str=(char*)malloc(sizeof(char));
+	char*temp=(char*)malloc(sizeof(char));
+	char*ptr=(char*)malloc(sizeof(char));
+	while(!feof(fp1)){
+		fread(str,2*sizeof(char),1,fp1);
+		fprintf(fp3,"%s",str);
+		if(strchr(str,'\n')){
+			count++;
+		}
 	}
+	count=count/4;
+	fclose(fp1);
+	fclose(fp3);
+	int i=0;
+	FILE*fp4=fopen("copy.txt","r");
+	fprintf(fp2,"%s\n","*FRIEND LIST*");
+	while(!feof(fp4)){
+		fgets(temp,count*sizeof(temp),fp4);
+		fprintf(fp2,"FRIEND%d ID: %s",i+1,temp);
+		fgets(temp,count*sizeof(temp),fp4);
+		fprintf(fp2,"FRIEND%d NAME: %s",i+1,temp);
+		fgets(temp,count*sizeof(temp),fp4);
+		char*p=strstr(temp,"FM");
+		char*k=strstr(temp,"M");
+		if(p){
+			strcpy(temp,"FEMALE\n");
+		}
+		else if(k){
+			strcpy(temp,"MALE\n");
+		}
+		fprintf(fp2,"FRIEND%d GENDER: %s",i+1,temp);
+		fgets(temp,count*sizeof(temp),fp4);
+		fprintf(fp2,"FRIEND%d AGE: %s\n",i+1,temp);
+		i++;
+		if(i==count){
+			exit(1);
+		}
+	}
+	fclose(fp2);
+	fclose(fp4);
+
 }
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 
-	decoding(argv[0],argv[1]);
-
+	decoding(argv[1],argv[2]);
+	
 	return 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*typedef struct friend{
-	char a_id[255];
-	char a_name[255];
-	char a_gender[255];
-	int a_age;
-}friend;
-
-typedef struct list{
-	char ID[255];
-	char NAME[255];
-	char GENDER[255];
-	int HP;
-	int MP;
-	int AGE;
-	unsigned short int coin;
-	int BOMB;
-	int POTTION;
-	int CURE;
-	int BOOK;
-	int count;
-	struct friend fri[255];
-}list;
-
-void program(list*s,char*argv){
-	FILE* q=fopen(argv,"rb");
-	if(q==NULL){
-		fprintf(stderr,"Bin_File is NULL");
-		exit(1);
-	}
-	FILE* fp=fopen("new.txt","w");
-	while(1){
-		fread(s,sizeof(s),1,q);
-		fputs(s,fp);
-		if(feof(q)){
-			break;
-		}
-		printf("*USER STATUS*\n");
-		printf("ID: %s\n NAME: %s\n GENDER: %s\n HP: %d\n MP: %d\n AGE: %d\n Coin: %hu\n\n",s->ID,s->NAME,s->GENDER,s->HP,s->MP,s->AGE,s->coin);
-		printf("*ITEM*\n");
-		printf("BOMB: %d\n POTTON: %d\n CURE: %d\n BOOK: %d\n\n",s->BOMB,s->POTTION,s->CURE,s->BOOK);
-		printf("*FRIEND LIST*\n");
-		for(int i=0;i<s->count;i++){
-			printf("FRIEND%d ID: %s\n FRIEND%d NAME: %s\n FRIEND%d GENDER: %s\n FRIEND%d AGE: %d\n\n",i+1,s->fri[i].a_id,i+1,s->fri[i].a_name,i+1,s->fri[i].a_gender,i+1,s->fri[i].a_age);
-		}
-	}
-	fclose(q);
-	fclose(fp);
-}
-
-int main(int argc, char *argv){
-
-	struct list*s;
-	//memset(%s,0,sizeof(s));
-	program(&s,argv[1]);
-	return 0;
-}*/
