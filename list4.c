@@ -45,7 +45,6 @@ void insertlast(node**head,char data){
 
 void insertfirst(node**head,char data){
 	node*newnode=addnode(data);
-	newnode->data=data;
 	newnode->next=*head;
 	(*head)->prev=newnode;
 	*head=newnode;
@@ -85,23 +84,24 @@ void deletenext(node*head,char value){
 }
 
 void deletenow(node*head,char value){
-	node*remove;
-	node*pre;
 	node*curr=head;
 	for(curr=head;curr->data==value;curr=curr->next);
+	node*remove=curr;
 	curr->prev->next=curr->next;
 	curr->next->prev=curr->prev;
-	free(curr);
+	free(remove);
 }
+
 
 int main(int argc, char*argv[]){
     node*head=NULL;
+    printlist(head);
     insertlast(&head,'A'); printlist(head);
     insertlast(&head,'B'); printlist(head);
     insertlast(&head,'C'); printlist(head);
     insert(head,'K'); printlist(head);
-    deletenext(head,'B');
-    \\deletenow(head,'B');
+    deletenext(head,'B'); printlist(head);
+    //deletenow(head,'B'); printlist(head);
     insertfirst(&head,'3'); printlist(head);
     insertfirst(&head,'2'); printlist(head);
     insertfirst(&head,'1'); printlist(head);

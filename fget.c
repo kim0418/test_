@@ -96,7 +96,7 @@ int main(void){
 	for(int i=0;i<5;i++){
 		input[i]=(char*)malloc(20*sizeof(char));
 	}
-	create(S,5);
+	create(S,3);
 	
 	for(int i=0;i<5;i++){
 		fgets(input[i],10,stdin);

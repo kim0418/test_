@@ -117,14 +117,15 @@ void option_handler(OPTION opt, char* argv){
 int main(int argc,char * argv[]){
     
 
-    printf("total # of arg %d\n",argc);
+/*    printf("total # of arg %d\n",argc);
 
     for(int i=0;i<argc;i++){
 	printf("ARG %d = %s\n",i,argv[i]);
     }
-	printf("\n");
+	printf("\n");*/
     if(argv[1]==NULL){
-    	printf("insert option\n");
+    	printf("옵션을 넣어주세요. 옵션을 보고싶으면 -help입력하세요\n");
+    	return 0;
     }
     if(strcmp(argv[1],"-list") == 0){
 	option_handler(LIST,argv[2]);
